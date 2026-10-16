@@ -489,10 +489,24 @@ print("\nPASSED")
 # are inside test_gates_can_fail and must not recurse", and giving it a second
 # meaning would make the empty-tree gate depend on a fast path it knows nothing
 # about.
-if os.environ.get("HP8904A_IN_GATE") or os.environ.get("HP8904A_ASSEMBLE_ONLY"):
+#
+# A CHECKOUT WITHOUT THE SUITES ASSEMBLES ONLY, AND SAYS SO. The public copy
+# (scripts/publish.py) carries the source, the two assemblers and the images,
+# not the emulator or the gates, so the run below has nothing to run. Without
+# this it died on a missing test_emulator.py; with it, it does exactly what
+# HP8904A_ASSEMBLE_ONLY does and prints which case it was. A checkout that has
+# the suites is unaffected: both files exist and this is false.
+_SUITES = [os.path.join(ROOT, "emulator", "tests", "test_emulator.py"),
+           os.path.join(ROOT, "hp8904a-rewrite", "tests", "run_all.py")]
+_no_suites = not all(os.path.isfile(p) for p in _SUITES)
+if (os.environ.get("HP8904A_IN_GATE") or os.environ.get("HP8904A_ASSEMBLE_ONLY")
+        or _no_suites):
     if os.environ.get("HP8904A_IN_GATE"):
         print("\n     the gates are not run: this build is inside "
               "test_gates_can_fail, and running them here recurses")
+    elif _no_suites and not os.environ.get("HP8904A_ASSEMBLE_ONLY"):
+        print("\n     assembled and cross-checked only: this checkout has no "
+              "test suites")
     else:
         print("\n     assembled only: make_roms.py runs the gates itself, "
               "alongside its own")

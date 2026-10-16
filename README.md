@@ -93,7 +93,7 @@ These features are additions:
 You need Python 3 and `lwasm` from [LWTOOLS](http://www.lwtools.ca/). The
 build has been checked with lwasm 4.25.
 
-    HP8904A_ASSEMBLE_ONLY=1 python3 hp8904a-rewrite/build.py
+    python3 hp8904a-rewrite/build.py
 
 Each source image is assembled twice, by `lwasm` and by this repository's own
 `firmware/asm6809.py`. The build refuses unless the two agree byte for byte.
