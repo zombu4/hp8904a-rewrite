@@ -6,6 +6,8 @@ assembly. It replaces both firmware chips on the A2 Digital Assembly: **A2U12**
 of HP's revision 27887A firmware was read and ported. The result builds as one
 program across the two parts and reports itself as revision **RW0001**.
 
+![The HP 8904A running this firmware: channel A at 1000.0 Hz, 300 mV, sine, to Output 1](images/main-screen.jpg)
+
 This repository contains:
 
 - the source,
@@ -15,6 +17,19 @@ This repository contains:
 
 Not affiliated with HP, Agilent or Keysight. "HP" and "8904A" are used only
 to name the instrument this runs on.
+
+## On the instrument
+
+Photographed on an 8904A running this firmware.
+
+| | |
+| --- | --- |
+| ![Service menu: Serial Number, view / re-enter](images/service-serial.jpg) | ![Service menu: Installed Options, view / toggle](images/service-options.jpg) |
+| The serial number can be viewed and re-entered at any time: no codeword, no factory-virgin lock. | Installed options, each one switched on and off independently. |
+| ![Installed Options: Option 001 On](images/installed-options.jpg) | ![Service menu: Diagnostics, self-tests](images/service-diagnostics.jpg) |
+| Option 001 switched on from the front panel. | The diagnostics and self-tests. |
+| ![Diagnostics: Relay Exercise, cycle every relay](images/relay-exercise.jpg) | |
+| The relay exercise, one of the additions: it cycles the output relays to clean their contacts. | |
 
 ## The images
 
