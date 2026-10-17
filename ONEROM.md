@@ -23,18 +23,47 @@ this repository adds one:
   low **and** `/OE` is high, as the 27513 does. A first version latched on
   `/WE` alone, and the instrument came up with display line 2 garbled, keys
   beeping, and then locked.
-- **A fifth, writable bank.** Writing `$34` selects a fifth bank, which is
-  RAM that the board copies to its own flash whenever it changes and reloads
-  at power-on. This firmware keeps the serial number, the installed options
-  and the twelve save/recall registers there. With the One ROM fitted, they
-  are designed to survive a flat backup battery. That has been tested in the
-  One ROM emulator, including a write torn by power loss, but not by pulling
-  the battery on an instrument. The battery-backed RAM keeps its working copy
-  at the usual addresses; at boot the bank's copy is written over it.
+- **A fifth bank, which is RAM.** Writing `$34` selects it. Unlike the four
+  pages, the instrument can write to it as well as read it. It is 16 KB of RAM
+  on the One ROM, reached through the same `$4000-$7FFF` window the pages use.
+  The board copies it to its own flash whenever it changes, and reloads it at
+  power-on, so it needs no battery.
 
-  On a genuine 27513 the firmware finds no fifth bank and runs from
-  battery-backed RAM alone, exactly as before. Nothing has to be configured
-  either way.
+## How much memory it adds
+
+The 8904A's own read-write memory is one 8 KB battery-backed RAM chip, the
+HM6264 at `$2000-$3FFF`. The fifth bank adds **16 KB**, three times the
+instrument's writable memory in total: 8 KB plus 16 KB.
+
+This firmware uses 5,728 bytes of it:
+
+| what | bytes | bank offset |
+| --- | ---: | --- |
+| the board's page marker, `$34` | 1 | `$0000` |
+| signature, `8904` | 4 | `$0001` |
+| serial number | 3 | `$0008` |
+| installed options | 1 | `$000B` |
+| the twelve save/recall registers, 476 bytes each | 5,712 | `$0010` |
+
+That leaves 10,656 bytes unused.
+
+**What is not stored there: the current setup.** The settings you are working
+with stay in the battery-backed RAM only, as on HP's firmware. So do the stack and the firmware's working
+variables. If a setup must survive a flat battery, save it to a register: SHIFT, SAVE
+(the ↓ key), the register number 0-11, then ENTER.
+
+The battery-backed RAM still holds working copies of the serial and options at
+their usual addresses. At boot the bank's copies are written over them, so the
+bank is the one that counts. A write goes to the bank first, so a power cut
+between the two writes is repaired at the next boot.
+
+With the One ROM fitted, the serial, options and saved registers are designed
+to survive a flat backup battery. That has been tested in the One ROM emulator,
+including a write torn by power loss, but not by pulling the battery on an
+instrument.
+
+On a genuine 27513 the firmware finds no fifth bank and keeps everything in the
+battery-backed RAM, exactly as before. Nothing has to be configured either way.
 
 ## The image
 

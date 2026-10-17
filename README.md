@@ -72,6 +72,12 @@ in the A2U13 socket in place of the 27513. It holds the One ROM firmware with a
 27513 page latch added, plus the four A2U13 pages above, already in slot order
 0, 2, 1, 3.
 
+It also gives the instrument a fifth bank of 16 KB RAM, kept in the board's
+flash, on top of its own 8 KB of battery-backed RAM. This firmware keeps the
+serial number, the options and the twelve save/recall registers there, designed
+to survive a flat backup battery. The current front-panel setup is not stored
+there; it stays in battery-backed RAM.
+
 | file | bytes | sha256 |
 | --- | ---: | --- |
 | `roms/onerom/hp8904a-a2u13-onerom-fire28a3.bin` | 196,608 | `15055c06239e6b2a4d70222d30ba3d8197f720279d3026f0f96233e0fdd2ab9b` |
