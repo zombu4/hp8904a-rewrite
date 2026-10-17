@@ -117,6 +117,11 @@ Use ↑ and ↓ to move between entries. Changing either `Display` or `Timeout`
 counts as the answer, and the screen does not open by itself again. To keep
 the display shown and only confirm it, enter a timeout.
 
+**With the original display, always type a timeout.** This firmware sets no
+default, so choosing `Original` without one leaves whatever the RAM held: no
+timeout after a flat battery, or about 18 hours on RAM never written. Enter
+**180** for HP's own three minutes.
+
 To change it later: **SHIFT f1** (SERVICE) opens the Service Menu. Choose
 `Display Backlight  which display, time`.
 
