@@ -61,13 +61,8 @@ in the A2U13 socket in place of the 27513. It holds the One ROM firmware with a
 | --- | ---: | --- |
 | `roms/onerom/hp8904a-a2u13-onerom-fire28a3.bin` | 196,608 | `15055c06239e6b2a4d70222d30ba3d8197f720279d3026f0f96233e0fdd2ab9b` |
 
-Flash it with the One ROM command-line tool:
-
-    onerom program --firmware roms/onerom/hp8904a-a2u13-onerom-fire28a3.bin --verify
-
-The latch switches pages only when `/WE` is low, `/CE` is low and `/OE` is
-high, as the 27513 does. A latch that switched on `/WE` alone left the
-instrument with line 2 garbled and then locked.
+**[ONEROM.md](ONEROM.md) explains what the One ROM is, why the 27513 needs a
+special build, and how to flash it step by step.**
 
 The One ROM firmware is MIT-licensed; see
 [roms/onerom/LICENSE-one-rom.md](roms/onerom/LICENSE-one-rom.md).
