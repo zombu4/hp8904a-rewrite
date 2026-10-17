@@ -100,6 +100,29 @@ legacy byte at `$3FF2`. This firmware never moves or clears those bytes, so
 they survive the change in both directions. Registers saved by HP's firmware
 read as empty here ("No recall setting in this register").
 
+## First power-on: the display setup
+
+The first time this firmware starts, it opens on the **DISPLAY BACKLIGHT**
+screen instead of the Main Selection Level, and asks which display is fitted.
+It works with both the original display and an aftermarket backlit
+replacement. Until you answer, the lamp stays on with no timeout.
+
+| entry | what it does |
+| --- | --- |
+| `Display` | **Original** or **Aftermarket**. Selecting it switches between the two. |
+| `Timeout` | Original display only: how long the lamp stays on after the last key, **5 to 999 seconds**, or **0** for no timeout, so the lamp stays on. Type the number, then ENTER; f4 leaves without changing it. With **Aftermarket** selected it reads `not used, lamp on`: an aftermarket display never times out. |
+| `Back` | up one level. |
+
+Use ↑ and ↓ to move between entries. Changing either `Display` or `Timeout`
+counts as the answer, and the screen does not open by itself again. To keep
+the display shown and only confirm it, enter a timeout.
+
+To change it later: **SHIFT f1** (SERVICE) opens the Service Menu. Choose
+`Display Backlight  which display, time`.
+
+The setting lives in battery-backed RAM, not in the One ROM's bank. After a
+flat backup battery the firmware asks again on the next power-on.
+
 ## Where it differs from HP's firmware
 
 These differences are on purpose:
@@ -119,8 +142,9 @@ These differences are on purpose:
 These features are additions:
 
 - **FM Stereo**, a screen of its own on the Main Selection Level.
-- **Backlight timeout.** HP's firmware has a fixed timeout of about three
-  minutes. Here it is settable, including Off.
+- **Display choice and backlight timeout.** HP's firmware has a fixed lamp
+  timeout of about three minutes. Here you choose the original display or an
+  aftermarket backlit one, and set the timeout. See the next section.
 - **Relay exercise**, under Diagnostics. It cycles the output relays to
   clean their contacts. Press UP to start; any key stops it and puts every
   relay back. NEXT or LAST switches between two sets: every relay, or the 48 dB
