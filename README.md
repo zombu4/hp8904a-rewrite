@@ -49,6 +49,31 @@ firmware reads that byte back to prove the page switched:
 
     for n in 0 1 2 3; do head -c1 roms/pages/rewrite_a2u13_page$n.bin | xxd -p; done    # 30 31 32 33
 
+### A2U13 on a One ROM
+
+`roms/onerom/hp8904a-a2u13-onerom-fire28a3.bin` is a complete image for a
+[One ROM](https://github.com/piersfinlayson/one-rom) **fire-28-a3** board fitted
+in the A2U13 socket in place of the 27513. It holds the One ROM firmware with a
+27513 page latch added, plus the four A2U13 pages above, already in slot order
+0, 2, 1, 3.
+
+| file | bytes | sha256 |
+| --- | ---: | --- |
+| `roms/onerom/hp8904a-a2u13-onerom-fire28a3.bin` | 196,608 | `15055c06239e6b2a4d70222d30ba3d8197f720279d3026f0f96233e0fdd2ab9b` |
+
+Flash it with the One ROM command-line tool:
+
+    onerom program --firmware roms/onerom/hp8904a-a2u13-onerom-fire28a3.bin --verify
+
+The latch switches pages only when `/WE` is low, `/CE` is low and `/OE` is
+high, as the 27513 does. A latch that switched on `/WE` alone left the
+instrument with line 2 garbled and then locked.
+
+The One ROM firmware is MIT-licensed; see
+[roms/onerom/LICENSE-one-rom.md](roms/onerom/LICENSE-one-rom.md).
+
+A2U12 still goes on a 27C256 (`roms/rewrite_a2u12.bin`).
+
 ## Before you burn
 
 **Keep your original ROMs.** They are the way back.
